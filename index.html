@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .calculator {
+      background: #1e1e1e;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      max-width: 400px;
+      width: 90%;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #00d4ff;
+    }
+    label {
+      display: block;
+      margin: 12px 0 5px;
+      font-weight: bold;
+      color: #bbb;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 16px;
+    }
+    input:focus {
+      outline: 2px solid #00d4ff;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #007bff, #00d4ff);
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    .result {
+      margin-top: 22px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      color: #fff;
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>Financial Calculator</h2>
+    <label for="cmp">CMP (Current Market Price)</label>
+    <input type="number" id="cmp" placeholder="Enter CMP" />
+
+    <label for="sl">SL (Stop Loss)</label>
+    <input type="number" id="sl" placeholder="Enter Stop Loss" />
+
+    <label for="risk">Risk</label>
+    <input type="number" id="risk" placeholder="Enter Risk Amount" />
+
+    <button onclick="calculateShares()">Calculate</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateShares() {
+      const cmp = parseFloat(document.getElementById("cmp").value);
+      const sl = parseFloat(document.getElementById("sl").value);
+      const risk = parseFloat(document.getElementById("risk").value);
+
+      if (isNaN(cmp) || isNaN(sl) || isNaN(risk)) {
+        document.getElementById("result").innerText = "⚠️ Please enter valid numbers.";
+        return;
+      }
+
+      const x = cmp - sl; // can be negative
+      const shares = Math.floor(risk / x); // can be negative
+
+      document.getElementById("result").innerHTML = 
+        `x = CMP - SL = <b>${cmp} - ${sl} = ${x.toFixed(2)}</b><br>` +
+        `You can buy <b>${shares}</b> shares.`;
+    }
+  </script>
+</body>
+</html>
